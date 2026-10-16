@@ -7,9 +7,21 @@ export interface AppState {
   lastAction: string;
 }
 
+// Thrown for a non-2xx response. Keeps the status as a field so it can be
+// reported without parsing the message, which the inline error still shows.
+export class HttpError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.name = "HttpError";
+    this.status = status;
+  }
+}
+
 async function call(path: string, method: "GET" | "POST"): Promise<AppState> {
   const res = await fetch(`${BASE}${path}`, { method });
-  if (!res.ok) throw new Error(`${method} ${path} failed: ${res.status}`);
+  if (!res.ok) throw new HttpError(`${method} ${path} failed: ${res.status}`, res.status);
   return res.json() as Promise<AppState>;
 }
 
