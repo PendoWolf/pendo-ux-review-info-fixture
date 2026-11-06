@@ -32,6 +32,9 @@ export default function App() {
   return (
     <main style={{ fontFamily: "system-ui, sans-serif", maxWidth: 480, margin: "4rem auto", textAlign: "center" }}>
       <h1>QAWolf Demo</h1>
+      <p data-testid="build-info" style={{ color: "#666", fontSize: 12 }}>
+        build 2026.10.15-rc1 (internal)
+      </p>
 
       <p data-testid="counter-value" style={{ fontSize: "3rem", margin: "1rem 0" }}>
         {state.counter}
